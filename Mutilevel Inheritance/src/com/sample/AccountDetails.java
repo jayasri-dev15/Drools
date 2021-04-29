@@ -1,12 +1,12 @@
 package com.sample;
 
-public class BankAccounts  // multilevel inheritance 
+public class AccountDetails  // multilevel inheritance 
 
 {
 String CustomerName;
 int accountNo;
 
-BankAccounts(String customerName, int accountNo) 
+AccountDetails(String customerName, int accountNo) 
 {
 	super();
 	this.CustomerName = customerName;
@@ -23,7 +23,7 @@ void display()
 
 //--------------- Extending the BankAccounts by adding balance details ----------------
 
-class AccountTracking extends BankAccounts
+class AccountTracking extends  AccountDetails
 {
 	double withdrawalAmount;
 	double remainingCash;
@@ -47,12 +47,12 @@ class AccountTracking extends BankAccounts
 
 //-------------- Extending the AccountTracking by adding additional details -------------
 
-class AccountDetails extends AccountTracking
+class Account extends AccountTracking
 {
 	double minimumOpeningBalance;
 	String accountType;
 	
-	AccountDetails(String customerName, int accountNo, double withdrawalAmount, double remainingCash,double minimumOpeningBalance, String accountType) 
+	Account(String customerName, int accountNo, double withdrawalAmount, double remainingCash,double minimumOpeningBalance, String accountType) 
 	{
 		super(customerName, accountNo, withdrawalAmount, remainingCash);
 		this.minimumOpeningBalance = minimumOpeningBalance;
