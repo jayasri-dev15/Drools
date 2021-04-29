@@ -15,6 +15,7 @@ public class Main {
 		
 		Animal a3=new Peacock();
 		a3.eat();
+		
 	}
 
 }
