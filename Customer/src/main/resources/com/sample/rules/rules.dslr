@@ -1,0 +1,12 @@
+//created on: Apr 30, 2021
+package com.sample.rule
+
+rule "A stand alone rule"
+
+    when
+        //conditions
+    then
+        //actions
+
+end
+
