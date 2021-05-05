@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<definitions id="Definition"
+             targetNamespace="http://www.jboss.org/drools"
+             typeLanguage="http://www.java.com/javaTypes"
+             expressionLanguage="http://www.mvel.org/2.0"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd"
+             xmlns:g="http://www.jboss.org/drools/flow/gpd"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:tns="http://www.jboss.org/drools">
+
+  <itemDefinition id="_amount" structureRef="Float" />
+  <itemDefinition id="_cardType" structureRef="String" />
+  <itemDefinition id="null" />
+
+  <process processType="Private" isExecutable="true" id="com.sample.bpmn.cardoffers" name="offers" tns:packageName="com.sample.cards" >
+
+    <extensionElements>
+     <tns:import name="org.kie.api.runtime.process.CaseAssignment" />
+     <tns:import name="com.sample.ProcessTest.Purchase" />
+     <tns:import name="org.kie.api.runtime.process.CaseData" />
+    </extensionElements>
+    <!-- process variables -->
+    <property id="amount" itemSubjectRef="null"/>
+    <property id="cardType" itemSubjectRef="null"/>
+
+    <!-- nodes -->
+    <startEvent id="ea5d7f54-774f-41cc-9459-2539a7b252cb" name="Start"  isInterrupting="false">
+    </startEvent>
+    <inclusiveGateway id="3fa35a1d-5e17-4f43-8b4e-dfc4598e2a30" name="Gateway" gatewayDirection="Diverging" >
+    </inclusiveGateway>
+    <scriptTask id="23eb15e4-1fcb-43d7-80c1-2123f461581d" name="SBI, ICICI , HDFC" >
+      <script>System.out.println("The available discount for your debit cards is 15 !!!");</script>
+    </scriptTask>
+    <scriptTask id="1423a94a-53ee-4c7e-ac23-060f180663d9" name="other cards" >
+      <script>System.out.println("No discount available !!!");</script>
+    </scriptTask>
+    <exclusiveGateway id="c1814e95-7399-4060-b8fe-7b1b32fd2dd9" name="Gateway" gatewayDirection="Converging" >
+    </exclusiveGateway>
+    <endEvent id="4fca8a55-1e6a-4f7f-a8ce-a9f3c6cf2a54" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+
+    <!-- connections -->
+    <sequenceFlow id="ea5d7f54-774f-41cc-9459-2539a7b252cb-3fa35a1d-5e17-4f43-8b4e-dfc4598e2a30" sourceRef="ea5d7f54-774f-41cc-9459-2539a7b252cb" targetRef="3fa35a1d-5e17-4f43-8b4e-dfc4598e2a30" />
+    <sequenceFlow id="3fa35a1d-5e17-4f43-8b4e-dfc4598e2a30-23eb15e4-1fcb-43d7-80c1-2123f461581d" sourceRef="3fa35a1d-5e17-4f43-8b4e-dfc4598e2a30" targetRef="23eb15e4-1fcb-43d7-80c1-2123f461581d" name="Discount Debit cards" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" >return amount&gt;=3500
+
+return cardType=="SBI"
+return cardType=="HDFC"
+return cardType=="ICICI"</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="3fa35a1d-5e17-4f43-8b4e-dfc4598e2a30-1423a94a-53ee-4c7e-ac23-060f180663d9" sourceRef="3fa35a1d-5e17-4f43-8b4e-dfc4598e2a30" targetRef="1423a94a-53ee-4c7e-ac23-060f180663d9" name="Non discount debit cards" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" >return amount&lt;=1000
+
+
+return cardType!="SBI"
+return cardType!="HDFC"
+return cardType!="ICICI"</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="1423a94a-53ee-4c7e-ac23-060f180663d9-c1814e95-7399-4060-b8fe-7b1b32fd2dd9" sourceRef="1423a94a-53ee-4c7e-ac23-060f180663d9" targetRef="c1814e95-7399-4060-b8fe-7b1b32fd2dd9" />
+    <sequenceFlow id="23eb15e4-1fcb-43d7-80c1-2123f461581d-c1814e95-7399-4060-b8fe-7b1b32fd2dd9" sourceRef="23eb15e4-1fcb-43d7-80c1-2123f461581d" targetRef="c1814e95-7399-4060-b8fe-7b1b32fd2dd9" />
+    <sequenceFlow id="c1814e95-7399-4060-b8fe-7b1b32fd2dd9-4fca8a55-1e6a-4f7f-a8ce-a9f3c6cf2a54" sourceRef="c1814e95-7399-4060-b8fe-7b1b32fd2dd9" targetRef="4fca8a55-1e6a-4f7f-a8ce-a9f3c6cf2a54" />
+
+  </process>
+
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="com.sample.bpmn.cardoffers" >
+      <bpmndi:BPMNShape bpmnElement="ea5d7f54-774f-41cc-9459-2539a7b252cb" >
+        <dc:Bounds x="68" y="242" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="3fa35a1d-5e17-4f43-8b4e-dfc4598e2a30" >
+        <dc:Bounds x="257" y="242" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="23eb15e4-1fcb-43d7-80c1-2123f461581d" >
+        <dc:Bounds x="408" y="122" width="80" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="1423a94a-53ee-4c7e-ac23-060f180663d9" >
+        <dc:Bounds x="421" y="343" width="80" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="c1814e95-7399-4060-b8fe-7b1b32fd2dd9" >
+        <dc:Bounds x="593" y="245" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="4fca8a55-1e6a-4f7f-a8ce-a9f3c6cf2a54" >
+        <dc:Bounds x="757" y="246" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="ea5d7f54-774f-41cc-9459-2539a7b252cb-3fa35a1d-5e17-4f43-8b4e-dfc4598e2a30" >
+        <di:waypoint x="92" y="266" />
+        <di:waypoint x="281" y="266" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="3fa35a1d-5e17-4f43-8b4e-dfc4598e2a30-23eb15e4-1fcb-43d7-80c1-2123f461581d" >
+        <di:waypoint x="281" y="266" />
+        <di:waypoint x="448" y="146" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="3fa35a1d-5e17-4f43-8b4e-dfc4598e2a30-1423a94a-53ee-4c7e-ac23-060f180663d9" >
+        <di:waypoint x="281" y="266" />
+        <di:waypoint x="461" y="367" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="1423a94a-53ee-4c7e-ac23-060f180663d9-c1814e95-7399-4060-b8fe-7b1b32fd2dd9" >
+        <di:waypoint x="461" y="367" />
+        <di:waypoint x="617" y="269" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="23eb15e4-1fcb-43d7-80c1-2123f461581d-c1814e95-7399-4060-b8fe-7b1b32fd2dd9" >
+        <di:waypoint x="448" y="146" />
+        <di:waypoint x="617" y="269" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="c1814e95-7399-4060-b8fe-7b1b32fd2dd9-4fca8a55-1e6a-4f7f-a8ce-a9f3c6cf2a54" >
+        <di:waypoint x="617" y="269" />
+        <di:waypoint x="781" y="270" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</definitions>

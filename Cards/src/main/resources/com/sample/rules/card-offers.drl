@@ -1,0 +1,51 @@
+//created on: Apr 12, 2021
+package com.sample.rules
+
+//list any import classes here.
+
+import com.sample.Purchase;
+
+//declare any global variables here
+
+
+
+
+rule "ICICI"
+
+    when
+        purchaseObject:Purchase(cardType=="ICICI" && amount>=5000);
+        
+    then
+        //actions
+        purchaseObject.setDiscount(10);
+
+end
+
+rule "HDFC"
+     when
+        purchaseObject:Purchase(cardType=="HDFC" && amount>=6000);
+        
+    then
+        //actions
+        purchaseObject.setDiscount(20);
+end
+
+rule "SBI"
+    //include attributes such as "salience" here...
+     when
+        purchaseObject:Purchase(cardType=="SBI" && amount>=7000);
+        
+    then
+        //actions
+        purchaseObject.setDiscount(30);
+end
+
+rule "Other cards"
+    //include attributes such as "salience" here...
+     when
+        purchaseObject:Purchase((cardType!="ICICI" && cardType!="HDFC" && cardType!="SBI") && amount<=4000);
+        
+    then
+        //actions
+        purchaseObject.setDiscount(2);
+end
