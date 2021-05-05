@@ -1,0 +1,40 @@
+//created on: May 5, 2021
+
+
+//list any import classes here.
+//package com.sample
+import com.sample.Details
+import com.sample.Department
+
+
+
+//declare any global variables here
+
+//expander rules.dsl
+
+
+rule "Eligible for assets"
+
+    when
+        //conditions
+        $d:Details((manager==true) && (departments=="IT")); 
+      
+    then
+        //actions
+        System.out.println("IT Asset will be delievered shortly");
+
+end
+
+rule "Not Eligible for assets"
+
+    when
+        //conditions
+        $d:Details((manager==false) && (departments!="IT")); 
+      
+    then
+        //actions
+        System.out.println("Only for managers and IT roles");
+
+end
+
+
