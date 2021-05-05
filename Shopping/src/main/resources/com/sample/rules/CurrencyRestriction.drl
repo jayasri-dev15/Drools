@@ -1,0 +1,46 @@
+//created on: May 5, 2021
+package com.sample.rules
+
+import com.sample.*
+
+//list any import classes here.
+
+
+
+//declare any global variables here
+
+
+
+
+rule "Australian Dollar"
+salience 6
+    when
+        //conditions
+        $c:Customer(currency=="Australian Dollar");
+    then
+        //actions
+        System.out.println("Try with various currency");
+
+end
+
+rule "Euro"
+salience 7
+    when
+        //conditions
+        $c:Customer(currency=="Euro");
+    then
+        //actions
+        System.out.println("Waiting for verification");
+
+end
+
+rule "US Dollar"
+salience 8
+    when
+        //conditions
+        $c:Customer(currency=="US Dollar");
+    then
+        //actions
+        System.out.println("Currency verified");
+
+end

@@ -1,0 +1,43 @@
+//created on: May 5, 2021
+package com.sample.rules
+
+//list any import classes here.
+
+import com.sample.*
+
+//declare any global variables here
+
+
+
+
+rule "Response 1"
+salience 1
+    when
+        //conditions
+        $o:Order((stock=="Electronic Goods")&&(amount>=100000));
+     //   $c:Customer(currency=="Euro");
+    then
+        //actions
+        System.out.println("Payment processed with an additional tax");
+
+end
+
+rule "Bio goods"
+ salience 2
+    when
+       $o:Order((stock=="Bio goods")&&(amount>=100000));
+     //  $c:Customer(currency=="Auatralian Dollar");
+       
+    then
+       System.out.println("Payment failed. Please proceed with the various currency type");
+end
+
+rule "Industry goods"
+salience 3
+    when
+       $o:Order((stock=="Industry goods")&&(amount>=100000));
+      // $c:Customer(currency=="US Dollar");
+       
+    then
+       System.out.println("Payment processed and products will shipped shortly");
+end

@@ -1,0 +1,33 @@
+//created on: May 5, 2021
+package com.sample.rules
+
+import com.sample.*
+//list any import classes here.
+
+
+
+//declare any global variables here
+
+
+
+
+rule "Order Amount"
+salience 4
+
+    when
+       $o:Order(amount<100000);
+    then
+       System.out.println("Rejected due to less amount");
+      // System.out.println(" You are an Inappropriate customer");
+       
+
+end
+
+rule "Order Amount greater than 1 lakh"
+    //include attributes such as "salience" here...
+    salience 5
+     when
+       $o:Order(amount>=100000);
+    then
+       System.out.println("Amount verified");
+end
