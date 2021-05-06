@@ -25,12 +25,15 @@ public class Test
     	Details det=new Details();
     	det.setName("ABC");
     	det.setManager(true);
-    	det.setDepartments(dept1);
+    	det.setDepartments(dept);
     	
     	Details det1=new Details();
     	det.setName("DEF");
     	det.setManager(true);
-    	det.setDepartments(dept);
+    	det.setDepartments(dept1);
+    	
+    	kSession.insert(dept);
+    	kSession.insert(dept1);
     	
     	kSession.insert(det1);
     	

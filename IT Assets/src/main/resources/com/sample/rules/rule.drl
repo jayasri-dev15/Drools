@@ -17,11 +17,13 @@ rule "Eligible for assets"
 
     when
         //conditions
-        $d:Details((manager==true) && (departments=="IT")); 
+        $dept:Department(department_name=="IT");
+        $d:Details((manager==true) && (departments==$dept)); 
       
     then
         //actions
-        System.out.println("IT Asset will be delievered shortly");
+     $d.setMessage("Give Laptop");
+   System.out.println($d.getName()+ ":"+$d.getDepartments().getDepartment_name()+ ":"+$d.getMessage());
 
 end
 
@@ -29,11 +31,13 @@ rule "Not Eligible for assets"
 
     when
         //conditions
-        $d:Details((manager==false) && (departments!="IT")); 
+         $dept:Department(department_name!="IT");
+        $d:Details((manager==false) && (departments==$dept)); 
       
     then
         //actions
-        System.out.println("Only for managers and IT roles");
+        $d.setMessage("No Laptop alloted");
+   System.out.println($d.getName()+ ":"+$d.getDepartments().getDepartment_name()+ ":"+$d.getMessage());
 
 end
 
