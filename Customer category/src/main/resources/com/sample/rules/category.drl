@@ -1,0 +1,40 @@
+//created on: May 6, 2021
+package com.sample.rules
+
+//list any import classes here.
+import com.sample.*
+
+import java.util.ArrayList;
+import java.util.List;
+
+//declare any global variables here
+
+
+
+
+
+rule "Platinum Customer"
+salience 100
+lock-on-active true
+    when
+       c : Customer()
+       items : List( size > 5 ) 
+       from collect( Stocks( quantity > 10 ) from c.stocks )
+ then
+        c.setCustType("Platinum");
+        System.out.println("Customer : " + c.getCustId() + " is a Platinum Customer");
+        update(c);
+end
+
+rule "Gold Customer"
+salience 50
+lock-on-active true
+    when
+       c : Customer()
+       items : List( size > 3 && size < 5) 
+       from collect( Stocks( quantity > 10 ) from c.stocks )
+ then
+        c.setCustType("Gold");
+        System.out.println("Customer : " + c.getCustId() + " is a Gold Customer");
+        update(c);
+end
