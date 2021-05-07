@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<definitions id="Definition"
+             targetNamespace="http://www.jboss.org/drools"
+             typeLanguage="http://www.java.com/javaTypes"
+             expressionLanguage="http://www.mvel.org/2.0"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd"
+             xmlns:g="http://www.jboss.org/drools/flow/gpd"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:tns="http://www.jboss.org/drools">
+
+  <itemDefinition id="_income" structureRef="Integer" />
+  <itemDefinition id="null" />
+  <process processType="Private" isExecutable="true" id="com.sample.bpmn.vehicle" name="ruleflow" tns:packageName="com.sample" >
+
+    <extensionElements>
+     <tns:import name="com.sample.ProcessTest.Passenger" />
+     <tns:import name="org.kie.api.runtime.process.CaseAssignment" />
+     <tns:import name="org.kie.api.runtime.process.CaseData" />
+    </extensionElements>
+    <!-- process variables -->
+    <property id="income" itemSubjectRef="null"/>
+
+    <!-- nodes -->
+    <endEvent id="770a67ca-bc31-4ec2-acf1-c033316968c6" >
+        <terminateEventDefinition />
+    </endEvent>
+    <startEvent id="83b196b9-c38b-4149-9640-5a6a00f0d3d7"  isInterrupting="true">
+    </startEvent>
+    <inclusiveGateway id="51acea5b-c5e6-40a9-8bd3-fb04702c2c05" name="Gateway" gatewayDirection="Diverging" >
+    </inclusiveGateway>
+    <exclusiveGateway id="c7d4518a-5be4-46b4-99d5-dac44012c728" name="Gateway" gatewayDirection="Converging" >
+    </exclusiveGateway>
+    <scriptTask id="f772b88f-6136-4dbc-a009-808e056e2b9b" name="car" >
+      <script>System.out.println("It is preferrable to have your journey in car");</script>
+    </scriptTask>
+    <scriptTask id="3a320827-2c1e-4aa3-973f-21c6838c63be" name="bike" >
+      <script>System.out.println("It is preferrable to have your journey in bike");</script>
+    </scriptTask>
+
+    <!-- connections -->
+    <sequenceFlow id="c7d4518a-5be4-46b4-99d5-dac44012c728-770a67ca-bc31-4ec2-acf1-c033316968c6" sourceRef="c7d4518a-5be4-46b4-99d5-dac44012c728" targetRef="770a67ca-bc31-4ec2-acf1-c033316968c6" />
+    <sequenceFlow id="83b196b9-c38b-4149-9640-5a6a00f0d3d7-51acea5b-c5e6-40a9-8bd3-fb04702c2c05" sourceRef="83b196b9-c38b-4149-9640-5a6a00f0d3d7" targetRef="51acea5b-c5e6-40a9-8bd3-fb04702c2c05" />
+    <sequenceFlow id="f772b88f-6136-4dbc-a009-808e056e2b9b-c7d4518a-5be4-46b4-99d5-dac44012c728" sourceRef="f772b88f-6136-4dbc-a009-808e056e2b9b" targetRef="c7d4518a-5be4-46b4-99d5-dac44012c728" />
+    <sequenceFlow id="3a320827-2c1e-4aa3-973f-21c6838c63be-c7d4518a-5be4-46b4-99d5-dac44012c728" sourceRef="3a320827-2c1e-4aa3-973f-21c6838c63be" targetRef="c7d4518a-5be4-46b4-99d5-dac44012c728" />
+    <sequenceFlow id="51acea5b-c5e6-40a9-8bd3-fb04702c2c05-f772b88f-6136-4dbc-a009-808e056e2b9b" sourceRef="51acea5b-c5e6-40a9-8bd3-fb04702c2c05" targetRef="f772b88f-6136-4dbc-a009-808e056e2b9b" name="car" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" >return income&gt;1000</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="51acea5b-c5e6-40a9-8bd3-fb04702c2c05-3a320827-2c1e-4aa3-973f-21c6838c63be" sourceRef="51acea5b-c5e6-40a9-8bd3-fb04702c2c05" targetRef="3a320827-2c1e-4aa3-973f-21c6838c63be" name="Bike" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" >return income&lt;1000</conditionExpression>
+    </sequenceFlow>
+
+  </process>
+
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="com.sample.bpmn.vehicle" >
+      <bpmndi:BPMNShape bpmnElement="770a67ca-bc31-4ec2-acf1-c033316968c6" >
+        <dc:Bounds x="411" y="452" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="83b196b9-c38b-4149-9640-5a6a00f0d3d7" >
+        <dc:Bounds x="410" y="24" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="51acea5b-c5e6-40a9-8bd3-fb04702c2c05" >
+        <dc:Bounds x="407" y="101" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="c7d4518a-5be4-46b4-99d5-dac44012c728" >
+        <dc:Bounds x="408" y="342" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="f772b88f-6136-4dbc-a009-808e056e2b9b" >
+        <dc:Bounds x="302" y="195" width="80" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="3a320827-2c1e-4aa3-973f-21c6838c63be" >
+        <dc:Bounds x="485" y="197" width="80" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="c7d4518a-5be4-46b4-99d5-dac44012c728-770a67ca-bc31-4ec2-acf1-c033316968c6" >
+        <di:waypoint x="432" y="366" />
+        <di:waypoint x="435" y="476" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="83b196b9-c38b-4149-9640-5a6a00f0d3d7-51acea5b-c5e6-40a9-8bd3-fb04702c2c05" >
+        <di:waypoint x="434" y="48" />
+        <di:waypoint x="431" y="125" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="f772b88f-6136-4dbc-a009-808e056e2b9b-c7d4518a-5be4-46b4-99d5-dac44012c728" >
+        <di:waypoint x="342" y="219" />
+        <di:waypoint x="432" y="366" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="3a320827-2c1e-4aa3-973f-21c6838c63be-c7d4518a-5be4-46b4-99d5-dac44012c728" >
+        <di:waypoint x="525" y="221" />
+        <di:waypoint x="432" y="366" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="51acea5b-c5e6-40a9-8bd3-fb04702c2c05-f772b88f-6136-4dbc-a009-808e056e2b9b" >
+        <di:waypoint x="431" y="125" />
+        <di:waypoint x="342" y="219" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="51acea5b-c5e6-40a9-8bd3-fb04702c2c05-3a320827-2c1e-4aa3-973f-21c6838c63be" >
+        <di:waypoint x="431" y="125" />
+        <di:waypoint x="525" y="221" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</definitions>
