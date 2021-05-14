@@ -1,0 +1,65 @@
+//created on: May 7, 2021
+package com.sample.rules
+
+//list any import classes here.
+
+import com.sample.*
+
+//declare any global variables here
+
+
+
+
+rule "Discount for Regular consultant"
+
+    when
+        $c:Category(premium_paid_amount >= 10000)
+        $p:Patient_Report (patient_Visiting_Type=="You are our Regularly visiting member proceed with the premium amount checking. Stay Healty Live Wealthy !!!");
+    then
+        $c.setDiscount(7000);
+        update($c);
+        System.out.println("Your are our regular consultant and also a insurance member so the discount for you is "+$c.getDiscount());
+
+end
+
+rule "Discount for Outpatients"
+    //include attributes such as "salience" here...
+    when
+        $c:Category(premium_paid_amount == 0)
+        $p:Patient_Report(patient_Visiting_Type== "Kindly become a member and consult your health issues here regularly in order to avail the facility");
+    then
+        $c.setDiscount(1000);
+        update($c);
+        System.out.println("The discount for the outpatients is "+$c.getDiscount()+" to avail better benifits become a member and pay your premium amount.");
+
+end
+
+
+rule "Discount for the Regular consultant but not having a profile"
+
+    when
+       $c:Category(premium_paid_amount == 0)
+       $p:Patient_Report( patient_Visiting_Type== "Since being a consultant to avail benefits create your profile with the help of the consultant.");
+         
+    then
+       $c.setDiscount(3500);
+       update($c);
+       System.out.println("The discount for the consultant is "+$c.getDiscount()+" try to become a member to avail an additional benefits and pay your premium amount.");
+
+end
+
+rule "discount for not a consultant"
+
+    //include attributes such as "salience" here...
+   when
+       $c:Category(premium_paid_amount >=10000 );
+       $p:Patient_Report(patient_Visiting_Type== "Try to have your consultant here to avail an additional benefits");
+         
+    then
+       $c.setDiscount(6000);
+       update($c);
+       System.out.println("The discount for you is "+$c.getDiscount()+" try to have your consultation here.");
+
+        
+end
+

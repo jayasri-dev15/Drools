@@ -1,0 +1,67 @@
+//created on: May 6, 2021
+package com.sample.rules
+
+//list any import classes here.
+
+import com.sample.*
+import java.util.*
+
+//declare any global variables here
+
+rule "Regular consultant"
+
+    when
+       $c:Category(patient_consulted_count>=6);
+       $p:Patient_Report( having_Insurance_Profile == true );
+         
+    then
+       $p.setPatient_Visiting_Type("You are our Regularly visiting member proceed with the premium amount checking. Stay Healty Live Wealthy !!!");
+       update($p);
+       System.out.println($p.getPatient_Visiting_Type());
+
+end
+
+rule "Outpatients"
+
+    //include attributes such as "salience" here...
+   when
+       $c:Category(patient_consulted_count<6);
+       $p:Patient_Report(having_Insurance_Profile == false );
+         
+    then
+       $p.setPatient_Visiting_Type("Kindly become a member and consult your health issues here regularly in order to avail the facility");
+       update($p);
+       System.out.println($p.getPatient_Visiting_Type());
+
+        
+end
+
+rule "Regular consultant but not having a profile"
+
+    when
+       $c:Category(patient_consulted_count>=6);
+       $p:Patient_Report( having_Insurance_Profile == false );
+         
+    then
+       $p.setPatient_Visiting_Type("Since being a consultant to avail benefits create your profile with the help of the consultant.");
+       update($p);
+       System.out.println($p.getPatient_Visiting_Type());
+
+end
+
+rule "not a consultant"
+
+    //include attributes such as "salience" here...
+   when
+       $c:Category(patient_consulted_count<6);
+       $p:Patient_Report(having_Insurance_Profile == true );
+         
+    then
+       $p.setPatient_Visiting_Type("Try to have your consultant here to avail an additional benefits");
+       update($p);
+       System.out.println($p.getPatient_Visiting_Type());
+
+        
+end
+
+
