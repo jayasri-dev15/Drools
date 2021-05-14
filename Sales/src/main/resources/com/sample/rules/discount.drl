@@ -1,0 +1,37 @@
+//created on: May 14, 2021
+package com.sample.rules
+
+//list any import classes here.
+import com.sample.*
+
+
+//declare any global variables here
+
+
+
+
+rule "Discount for car sale"
+
+    when
+        $s:Sale (item == "Car" && quantity >= 5);
+    then
+        $s.setDiscount(10);
+
+end
+
+rule "Discount for bike sale"
+
+    when
+        $s:Sale (item == "Bike" && quantity >= 5);
+    then
+        $s.setDiscount(20);
+
+end
+
+rule "Discount for other sale"
+
+   when 
+     $s:Sale( item != "Car" && item != "Bike")
+   then
+     $s.setDiscount(0);
+end
