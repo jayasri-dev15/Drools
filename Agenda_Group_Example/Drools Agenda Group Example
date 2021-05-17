@@ -1,0 +1,5 @@
+Drools Agenda Group Example
+Agenda Group in Drools is special feature in Drools which contains a set of rules or a single rule within a group and it makes the knowledge session understand the activation of rules.
+At a single moment of time, only one agenda group has focus that means only the rules in that group will be activated and fired.
+By default every rule is associated with the MAIN agenda group.
+Agenda group are useful to differentiate the set of rules from the rest of the rules in a knowledge session that apply to particular sub-process within a large process.*/
