@@ -1,0 +1,37 @@
+//created on: May 17, 2021
+package com.sample.rules
+
+//list any import classes here.
+
+import com.sample.LoanAmount
+
+//declare any global variables here
+
+
+rule "Check Bank Balance"
+agenda-group "Check Balance"
+salience 200
+when
+    $loanAmount : LoanAmount(monthlyInstallment > bankBalance)
+then
+    System.out.println(drools.getRule().getName());
+    kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("Insufficient Balance").setFocus();
+end
+
+rule "Rule Insufficient Balance"
+agenda-group "Insufficient Balance"
+when
+    $loanAmount : LoanAmount();
+then
+    $loanAmount.setInsufficientBalance(true);
+    System.out.println("Insufficient Funds to perform operation. Send Reminder Email");
+    drools.halt();
+end
+
+rule "Send Thanks Email"
+salience 100
+when
+    $loanAmount : LoanAmount()
+then
+    System.out.println("EMI payment already done for account - " +$loanAmount.getAccountId());
+end
